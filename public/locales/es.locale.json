@@ -1,0 +1,37 @@
+{
+	"navbar": {
+		"home": "Home",
+		"blog": "Blog",
+		"projects": "Proyectos"
+	},
+	"homePage": {
+		"aboutMe": "Sobre Me",
+		"workExperience": "Experiencia laboral",
+		"skills": "Habilidades",
+		"educationBackground": "Educación",
+		"whoAmI": "¿Quien soy?"
+	},
+	"contact": "Contacto",
+	"resume": "Currículum",
+	"portfolio": "Portafolio",
+	"home": "Home",
+	"language": "Lenguaje",
+	"english": "English",
+	"spanish": "Español",
+	"footer": {
+		"madeWith": "Hecho con",
+		"almostAllRightsReserved": "Casi todos los derechos reservados"
+	},
+	"authHandlerMenu": {
+		"account": "Cuenta",
+		"login": "Iniciar sesión",
+		"signUp": "Registrarse",
+		"logout": "Cerrar sesión"
+	},
+	"loginForm": {
+		"close": "Cerrar"
+	},
+	"name": "Nombre",
+	"email": "Email",
+	"password": "Contraseña"
+}

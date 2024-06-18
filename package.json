@@ -1,24 +1,65 @@
 {
-  "name": "lewissmatos.dev",
-  "version": "0.1.0",
-  "private": true,
-  "scripts": {
-    "dev": "next dev",
-    "build": "next build",
-    "start": "next start",
-    "lint": "next lint"
-  },
-  "dependencies": {
-    "react": "^18",
-    "react-dom": "^18",
-    "next": "14.2.4"
-  },
-  "devDependencies": {
-    "typescript": "^5",
-    "@types/node": "^20",
-    "@types/react": "^18",
-    "@types/react-dom": "^18",
-    "postcss": "^8",
-    "tailwindcss": "^3.4.1"
-  }
+	"name": "lewissmatos.dev",
+	"version": "0.1.0",
+	"private": true,
+	"scripts": {
+		"dev": "next dev -p 7777",
+		"start": "next start",
+		"build": "next build",
+		"lint": "next lint",
+		"test": "jest"
+	},
+	"dependencies": {
+		"@next-auth/prisma-adapter": "^1.0.7",
+		"@nextui-org/react": "^2.4.1",
+		"@nextui-org/theme": "^2.2.5",
+		"@types/bcrypt": "^5.0.2",
+		"@types/jsonwebtoken": "^9.0.6",
+		"axios": "^1.7.2",
+		"bcrypt": "^5.1.1",
+		"cloudinary": "^2.2.0",
+		"date-fns": "^3.6.0",
+		"framer-motion": "^11.2.10",
+		"jsonwebtoken": "^9.0.2",
+		"next": "14.2.4",
+		"next-auth": "^4.24.7",
+		"next-cloudinary": "^6.6.2",
+		"next-themes": "^0.3.0",
+		"react": "^18",
+		"react-dom": "^18",
+		"react-hook-form": "^7.52.0",
+		"react-hot-toast": "^2.4.1",
+		"react-redux": "^9.1.2",
+		"redux": "^5.0.1",
+		"redux-persist": "^6.0.0",
+		"tailwind": "^4.0.0"
+	},
+	"devDependencies": {
+		"@iconify/json": "^2.2.218",
+		"@iconify/tailwind": "^1.1.1",
+		"@prisma/client": "^5.15.1",
+		"@reduxjs/toolkit": "^2.2.5",
+		"@testing-library/jest-dom": "^6.4.6",
+		"@testing-library/react": "^16.0.0",
+		"@testing-library/user-event": "^14.5.2",
+		"@types/jest": "^29.5.12",
+		"@types/node": "^20.14.2",
+		"@types/react": "^18",
+		"@types/react-dom": "^18",
+		"@typescript-eslint/eslint-plugin": "^7.2.0",
+		"@typescript-eslint/parser": "^7.2.0",
+		"eslint": "^8.57.0",
+		"eslint-plugin-react-hooks": "^4.6.0",
+		"eslint-plugin-react-refresh": "^0.4.6",
+		"jest": "^29.7.0",
+		"jest-environment-jsdom": "^29.7.0",
+		"postcss": "^8",
+		"prisma": "^5.15.1",
+		"redux-mock-store": "^1.5.4",
+		"sass": "^1.77.5",
+		"tailwindcss": "^3.4.1",
+		"ts-jest": "^29.1.4",
+		"ts-node": "^10.9.2",
+		"typescript": "^5"
+	}
 }

@@ -1,0 +1,45 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@font-face {
+	font-family: "lmmono10-regular";
+	src: url("/public/fonts/PlayfairDisplay-VariableFont_wght.ttf");
+}
+
+.layout-padding {
+	@media (max-width: 768px) {
+		padding: 0 20px;
+	}
+
+	@media (min-width: 769px) and (max-width: 1024px) {
+		padding: 0 50px;
+	}
+
+	@media (min-width: 1025px) and (max-width: 1424px) {
+		padding: 0 150px;
+	}
+
+	@media (min-width: 1425px) {
+		padding: 0 250px;
+	}
+}
+body {
+	font-family: "PlayfairDisplay-VariableFont_wght", "Courier-Prime", sans-serif;
+
+	@media (max-width: 768px) {
+		padding: 0 20px;
+	}
+
+	@media (min-width: 769px) and (max-width: 1024px) {
+		padding: 0 50px;
+	}
+
+	@media (min-width: 1025px) and (max-width: 1424px) {
+		padding: 0 150px;
+	}
+
+	@media (min-width: 1425px) {
+		padding: 0 250px;
+	}
+}
