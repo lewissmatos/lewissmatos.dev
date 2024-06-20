@@ -9,10 +9,12 @@ import {
 	signOut as nextSignOut,
 } from "next-auth/react";
 import { setAuth, setUser } from "@/redux/reducers/auth/authSlice";
+import { useLocale } from "@/hooks/useLocale";
 
 const useAuthService = () => {
 	const { axiosInstance } = useAxiosInstance();
 	const dispatch = useDispatch();
+	const { translate } = useLocale();
 	const login = async (payload: ILogin) => {
 		try {
 			const res = await signIn("credentials", {
@@ -29,7 +31,7 @@ const useAuthService = () => {
 				const jwt = await getCsrfToken();
 
 				if (!session?.user?.email) {
-					toast.error("User not found");
+					toast.error(translate("toast.userNotFound"));
 					throw new Error("User not found");
 				}
 				const response = await getCurrentUser(session?.user?.email);
@@ -39,7 +41,7 @@ const useAuthService = () => {
 						session: { accessToken: jwt as string },
 					})
 				);
-				toast.success("Login successfully");
+				toast.success(translate("toast.loginSuccessfully"));
 				return res.ok;
 			}
 		} catch (error) {
@@ -56,14 +58,16 @@ const useAuthService = () => {
 				password,
 			});
 			if (response.status !== 201 || !response.data) {
-				toast.error("Sign up failed");
+				toast.error(translate("toast.signUpFailed"));
+
 				throw new Error("Sign up failed");
 			}
 			const isOk = await login({ email, password });
 			if (!isOk) {
-				toast.error("Login failed");
+				toast.error(translate("toast.loginFailed"));
 			}
-			toast.success("Sign up successfully");
+
+			toast.success(translate("toast.loginSuccessfully"));
 			return isOk;
 		} catch (error) {
 			throw new Error((error as any)?.message);

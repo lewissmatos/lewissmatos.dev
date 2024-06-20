@@ -33,5 +33,12 @@
 	},
 	"name": "Name",
 	"email": "Email",
-	"password": "Password"
+	"password": "Password",
+	"toast": {
+		"userNotFound": "User not found",
+		"loginSuccessfully": "Login successfully",
+		"signUpFailed": "Sign up failed",
+		"loginFailed": "Login failed"
+	},
+	"addProjectForm": { "title": "Add project", "submit": "Add" }
 }

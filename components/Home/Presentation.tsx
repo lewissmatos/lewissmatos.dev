@@ -12,7 +12,15 @@ const socialMediaIcons = [
 const Presentation = () => {
 	const { portfolioData } = useAppDataLanguage();
 	const { fullName, role, socialLinks } = portfolioData;
-
+	//TODO
+	const downloadPDF = () => {
+		const link = document.createElement("a");
+		link.href = "/profile.jpeg";
+		link.download = "Res.jpeg";
+		document.body.appendChild(link);
+		link.click();
+		document.body.removeChild(link);
+	};
 	return (
 		<section>
 			<div className="flex flex-col sm:flex-row justify-between">

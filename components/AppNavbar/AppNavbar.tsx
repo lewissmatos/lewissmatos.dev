@@ -45,7 +45,7 @@ const NavLink: FC<NavLinkProps> = ({ href, label }) => {
 
 const menuItems: string[] = ["home", "projects", "blog"];
 const AppNavbar = () => {
-	const { user, session } = useAppSelector((state: RootState) => state.auth!);
+	const { user } = useAppSelector((state: RootState) => state.auth!);
 
 	const { translate } = useLocale();
 	const {
@@ -86,13 +86,12 @@ const AppNavbar = () => {
 					/>
 					<NavbarBrand>
 						<NavbarItem>
-							<Link href="home">
-								<span className="font-bold text-lg mr-3 cursor-pointer">
+							<Link href="/home">
+								<span className="font-bold text-md mr-3 cursor-pointer">
 									lewissmatos.dev
 								</span>
 							</Link>
 						</NavbarItem>
-						<p className="font-bold text-lg mr-3"></p>
 					</NavbarBrand>
 				</NavbarContent>
 				<NavbarContent
@@ -101,13 +100,12 @@ const AppNavbar = () => {
 				>
 					<NavbarBrand>
 						<NavbarItem>
-							<Link href="home">
-								<span className="font-bold text-lg mr-3 cursor-pointer">
-									lewissmatos.dev
+							<Link href="/home">
+								<span className="font-bold text-md mr-1 cursor-pointer">
+									lewissmatos.devs
 								</span>
 							</Link>
 						</NavbarItem>
-						<p className="font-bold text-lg mr-3"></p>
 					</NavbarBrand>
 				</NavbarContent>
 				<NavbarContent
@@ -124,10 +122,10 @@ const AppNavbar = () => {
 					<NavbarItem>
 						<ThemeToggler />
 					</NavbarItem>
-					<NavbarItem>
+					<NavbarItem className="hidden sm:flex">
 						<LanguageSelector />
 					</NavbarItem>
-					<NavbarItem>
+					<NavbarItem className="hidden sm:flex">
 						<AuthHandlerMenu
 							onLoginOpen={onLoginOpen}
 							onSignUpOpen={onSignUpOpen}
@@ -135,19 +133,33 @@ const AppNavbar = () => {
 						/>
 					</NavbarItem>
 				</NavbarContent>
-				<NavbarMenu>
-					{menuItems.map((item, index) => (
-						<NavbarMenuItem
-							key={`${item}-${index}`}
-							onClick={() => setIsMenuOpen(false)}
-						>
-							<NavLink
-								href={item}
-								label={translate(`navbar.${item}`)}
-								className="w-full"
+				<NavbarMenu className="flex flex-col justify-between">
+					<div>
+						{menuItems.map((item, index) => (
+							<NavbarMenuItem
+								key={`${item}-${index}`}
+								onClick={() => setIsMenuOpen(false)}
+							>
+								<NavLink
+									href={item}
+									label={translate(`navbar.${item}`)}
+									className="w-full"
+								/>
+							</NavbarMenuItem>
+						))}
+					</div>
+					<div className="flex flex-col gap-2 items-end mb-6">
+						<NavbarItem>
+							<LanguageSelector />
+						</NavbarItem>
+						<NavbarItem>
+							<AuthHandlerMenu
+								onLoginOpen={onLoginOpen}
+								onSignUpOpen={onSignUpOpen}
+								user={user as IUser | undefined}
 							/>
-						</NavbarMenuItem>
-					))}
+						</NavbarItem>
+					</div>
 				</NavbarMenu>
 			</Navbar>
 		</>

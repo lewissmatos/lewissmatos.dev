@@ -1,14 +1,7 @@
 import axios, { AxiosInstance, AxiosResponse } from "axios";
 import toast from "react-hot-toast";
-import { useDispatch, useSelector } from "react-redux";
 
 export const useAxiosInstance = () => {
-	const { token } = useSelector(
-		(state: { auth: any; store: { auth: any } }): any => state.auth
-	);
-
-	const dispatch = useDispatch();
-
 	const api: AxiosInstance = axios.create({
 		// baseURL: process.env.,
 		timeout: 60000, // Timeout in milliseconds
@@ -19,8 +12,9 @@ export const useAxiosInstance = () => {
 
 	// Set the AUTH token for any request
 	api.interceptors.request.use(function (config) {
-		const token = getTokenFormStore();
-		config.headers.Authorization = token ? `Bearer ${token}` : "";
+		// TODO
+		// const token = getTokenFormStore();
+		// config.headers.Authorization = token ? `Bearer ${token}` : "";
 		return config;
 	});
 
@@ -68,16 +62,11 @@ export const useAxiosInstance = () => {
 		return api.delete(url, { params });
 	};
 
-	const getTokenFormStore = () => {
-		return token as string;
-	};
-
 	return {
 		axiosGet,
 		axiosPost,
 		axiosPut,
 		axiosRemove,
 		axiosInstance: api,
-		getTokenFormStore,
 	};
 };

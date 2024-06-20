@@ -23,7 +23,6 @@ const AuthHandlerMenu: FC<AuthHandlerMenuProps> = ({
 }) => {
 	const { translate } = useLocale();
 	const isAdmin = user?.role?.name === "admin";
-
 	const { signOut } = useAuthService();
 	return (
 		<Dropdown>
@@ -32,6 +31,9 @@ const AuthHandlerMenu: FC<AuthHandlerMenuProps> = ({
 					variant={isAdmin ? "solid" : "flat"}
 					color={isAdmin ? "primary" : "default"}
 				>
+					{isAdmin && (
+						<span className="icon-[material-symbols--admin-panel-settings-outline-rounded] text text-lg "></span>
+					)}
 					{user
 						? user.name?.split(" ")?.[0]
 						: translate("authHandlerMenu.account")}

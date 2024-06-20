@@ -36,10 +36,10 @@ model Project {
   name          String?
   description   String?
   coverUrl      String?
-  screenshots   String[]
-  technologies  String[]
-  createdAt     DateTime @default(now())
-  updatedAt     DateTime @updatedAt
+  screenshots   String[] @default([])
+  technologies  String[] @default([])
+  startedAt     DateTime @default(now())
+  finishedAt    DateTime @default(now())
   url           String?
   repoUrl       String?
 }

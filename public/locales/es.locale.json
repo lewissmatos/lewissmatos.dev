@@ -33,5 +33,12 @@
 	},
 	"name": "Nombre",
 	"email": "Email",
-	"password": "Contraseña"
+	"password": "Contraseña",
+	"toast": {
+		"userNotFound": "Usuario no encontrado",
+		"loginSuccessfully": "Inicio de sesión exitoso",
+		"signUpFailed": "Error al registrarse",
+		"loginFailed": "Error al iniciar sesión"
+	},
+	"addProjectForm": { "title": "Agregar proyecto", "submit": "Agregar" }
 }
