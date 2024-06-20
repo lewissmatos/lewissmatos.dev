@@ -1,6 +1,7 @@
 import prismaClient from "@/app/lib/prisma-db";
 import { Project } from "@prisma/client";
 import React from "react";
+import ProjectCard from "./ProjectCard";
 
 const getProducts = async () => {
 	try {
@@ -15,13 +16,9 @@ const ProjectsList = async () => {
 	const projects = await getProducts();
 
 	return (
-		<section>
+		<section className="grid grid-cols-1 lg:grid-cols-2 gap-4 px-2">
 			{projects.map((project: Project) => {
-				return (
-					<div key={project.id} className="flex flex-col gap-2">
-						<h1>{project.name}</h1>
-					</div>
-				);
+				return <ProjectCard project={project} key={project.id} />;
 			})}
 		</section>
 	);

@@ -1,7 +1,8 @@
+import { setLanguage } from "@/app/actions/language.action";
 import { RootState, useAppSelector } from "@/redux/appStore";
 import {
 	AppLanguage,
-	setLanguage,
+	// setLanguage,
 } from "@/redux/reducers/preferences/preferencesSlice";
 import {
 	Button,
@@ -29,15 +30,9 @@ const languages = [
 ];
 
 const LanguageSelector = () => {
-	const dispatch = useDispatch();
 	const language = useAppSelector(
 		(state: RootState) => state.preferences.language
 	);
-
-	const onChoseLanguage = (lang: AppLanguage) => {
-		dispatch(setLanguage(lang));
-	};
-
 	return (
 		<Dropdown>
 			<DropdownTrigger>
@@ -52,7 +47,10 @@ const LanguageSelector = () => {
 					return (
 						<DropdownItem
 							key={lang.key}
-							onClick={() => onChoseLanguage(lang.key as AppLanguage)}
+							onClick={async () => {
+								await setLanguage(lang.key as AppLanguage);
+								// onChoseLanguage(lang.key as AppLanguage);
+							}}
 						>
 							<span className={isSelected ? "text font-bold" : ""}>
 								{lang.value}
