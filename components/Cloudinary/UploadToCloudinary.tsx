@@ -1,7 +1,6 @@
 import { useLocale } from "@/hooks/useLocale";
-import { useAppSelector } from "@/redux/appStore";
 import { Button } from "@nextui-org/react";
-import { CldUploadWidget, CldUploadWidgetProps } from "next-cloudinary";
+import { CldUploadWidget } from "next-cloudinary";
 import { FC, useState } from "react";
 
 import React from "react";
@@ -17,7 +16,6 @@ const UploadToCloudinary: FC<UploadToCloudinaryProps> = ({
 }) => {
 	const [elements, setElements] = useState<string[] | null>(null);
 	const { translate } = useLocale();
-	const theme = useAppSelector((state) => state.preferences.theme);
 	return (
 		<CldUploadWidget
 			uploadPreset="lewissmatos-site"
@@ -31,10 +29,8 @@ const UploadToCloudinary: FC<UploadToCloudinaryProps> = ({
 					if (!prevValue) return [name];
 					return [...prevValue, name];
 				});
-				// widget.close();
 			}}
 			options={{
-				theme,
 				...options,
 			}}
 		>

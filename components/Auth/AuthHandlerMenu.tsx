@@ -1,6 +1,6 @@
 "use client";
 import { useLocale } from "@/hooks/useLocale";
-import { IUser } from "@/interfaces/user.interface";
+import { _User } from "@/store/auth.store";
 import useAuthService from "@/useServices/useAuthService";
 import {
 	Dropdown,
@@ -14,7 +14,7 @@ import React, { FC } from "react";
 type AuthHandlerMenuProps = {
 	onLoginOpen: () => void;
 	onSignUpOpen: () => void;
-	user?: IUser;
+	user?: _User;
 };
 const AuthHandlerMenu: FC<AuthHandlerMenuProps> = ({
 	onLoginOpen,

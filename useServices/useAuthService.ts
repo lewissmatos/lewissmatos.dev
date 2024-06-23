@@ -8,12 +8,12 @@ import {
 	signIn,
 	signOut as nextSignOut,
 } from "next-auth/react";
-import { setAuth, setUser } from "@/redux/reducers/auth/authSlice";
 import { useLocale } from "@/hooks/useLocale";
+import { useAuthStore } from "@/store/auth.store";
 
 const useAuthService = () => {
 	const { axiosInstance } = useAxiosInstance();
-	const dispatch = useDispatch();
+	const setAuth = useAuthStore((state) => state.setAuth);
 	const { translate } = useLocale();
 	const login = async (payload: ILogin) => {
 		try {
@@ -35,12 +35,16 @@ const useAuthService = () => {
 					throw new Error("User not found");
 				}
 				const response = await getCurrentUser(session?.user?.email);
-				dispatch(
-					setAuth({
-						user: response.data.data,
-						session: { accessToken: jwt as string },
-					})
-				);
+				// dispatch(
+				// 	setAuth({
+				// 		user: response.data.data,
+				// 		session: { accessToken: jwt as string },
+				// 	})
+				// );
+				setAuth({
+					user: response.data.data,
+					session: { accessToken: jwt as string },
+				});
 				toast.success(translate("toast.loginSuccessfully"));
 				return res.ok;
 			}
@@ -76,7 +80,10 @@ const useAuthService = () => {
 
 	const signOut = async () => {
 		try {
-			dispatch(setAuth(null));
+			setAuth({
+				user: null,
+				session: null,
+			});
 			await nextSignOut({ redirect: false });
 		} catch (error) {
 			throw new Error((error as any)?.message);

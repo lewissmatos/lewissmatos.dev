@@ -1,7 +1,7 @@
 import { Link } from "@nextui-org/react";
 import React, { FC } from "react";
-import { RootState, useAppSelector } from "@/redux/appStore";
 import { ISocialLink } from "@/interfaces/app-data.interface";
+import { useTheme } from "next-themes";
 
 type SocialLinkProps = {
 	link: ISocialLink;
@@ -9,8 +9,9 @@ type SocialLinkProps = {
 };
 
 const SocialLink: FC<SocialLinkProps> = ({ link, socialMediaIconClass }) => {
-	const isDarkModeEnabled =
-		useAppSelector((state: RootState) => state.preferences.theme) === "dark";
+	const { theme } = useTheme();
+
+	const isDarkModeEnabled = theme === "dark";
 	return (
 		<Link
 			style={{

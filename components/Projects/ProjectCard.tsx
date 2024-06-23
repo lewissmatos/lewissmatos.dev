@@ -12,6 +12,7 @@ import { Project } from "@prisma/client";
 import { format } from "date-fns";
 import { useAppSelector } from "@/redux/appStore";
 import { useLocale } from "@/hooks/useLocale";
+import { useAuthStore } from "@/store/auth.store";
 
 type ProjectCardProps = {
 	project: Project;
@@ -21,7 +22,7 @@ const ProjectCard = ({
 	project,
 	handleOpenDeleteProject,
 }: ProjectCardProps) => {
-	const user = useAppSelector((state) => state.auth?.user);
+	const user = useAuthStore((state) => state.user);
 	const { translate } = useLocale();
 	const canEdit = user?.email === "lewissmatos@gmail.com";
 	return (

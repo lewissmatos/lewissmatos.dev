@@ -1,7 +1,6 @@
-import { AppLanguage } from "@/redux/reducers/preferences/preferencesSlice";
 import englishLocaleData from "../public/locales/en.locale.json";
 import spanishLocaleData from "../public/locales/es.locale.json";
-import { useAppSelector } from "@/redux/appStore";
+import { AppLanguage, usePreferencesStore } from "@/store/preferences.store";
 
 export type LocaleOptions = {
 	capitalize?: boolean;
@@ -19,10 +18,13 @@ export type LocaleOptions = {
 	};
 };
 const useLocale = (currentLang?: AppLanguage) => {
-	const language: AppLanguage =
-		currentLang || useAppSelector((state) => state.preferences.language);
+	let language: AppLanguage =
+		currentLang || usePreferencesStore((state) => state.language);
 
 	const translate = (key: string, options?: LocaleOptions) => {
+		if (!language) {
+			language = "es-DO";
+		}
 		const localeData =
 			language === "en-US" ? englishLocaleData : spanishLocaleData;
 

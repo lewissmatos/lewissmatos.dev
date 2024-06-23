@@ -7,6 +7,7 @@ import { useProjectsService } from "@/useServices/useProjectsService";
 import AddProjectForm from "./AddProjectForm";
 import { RootState, useAppSelector } from "@/redux/appStore";
 import { useLocale } from "@/hooks/useLocale";
+import { useAuthStore } from "@/store/auth.store";
 
 const ProjectsList = () => {
 	const { projects, add, update, remove, isLoading } = useProjectsService();
@@ -23,7 +24,7 @@ const ProjectsList = () => {
 	} = useDisclosure();
 
 	const { translate } = useLocale();
-	const { user } = useAppSelector((state: RootState) => state.auth!);
+	const user = useAuthStore((state) => state.user);
 	const [selectedProject, setSelectedProject] = React.useState<Project>();
 
 	const isAdmin = user?.role?.name === "admin";

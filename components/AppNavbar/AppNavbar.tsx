@@ -20,8 +20,7 @@ import { useLocale } from "@/hooks/useLocale";
 import AuthHandlerMenu from "../Auth/AuthHandlerMenu";
 import LoginForm from "../Auth/LoginForm";
 import SignUpForm from "../Auth/SignUpForm";
-import { IUser } from "@/interfaces/user.interface";
-import { useAppSelector, RootState } from "@/redux/appStore";
+import { _User, useAuthStore } from "@/store/auth.store";
 
 type NavLinkProps = {
 	href: string;
@@ -45,7 +44,8 @@ const NavLink: FC<NavLinkProps> = ({ href, label }) => {
 
 const menuItems: string[] = ["home", "projects", "blog"];
 const AppNavbar = () => {
-	const { user } = useAppSelector((state: RootState) => state.auth!);
+	// const { user } = useAppSelector((state: RootState) => state.auth!);
+	const user = useAuthStore((state) => state.user);
 
 	const { translate } = useLocale();
 	const {
@@ -129,7 +129,7 @@ const AppNavbar = () => {
 						<AuthHandlerMenu
 							onLoginOpen={onLoginOpen}
 							onSignUpOpen={onSignUpOpen}
-							user={user as IUser | undefined}
+							user={user as _User | undefined}
 						/>
 					</NavbarItem>
 				</NavbarContent>
@@ -152,7 +152,7 @@ const AppNavbar = () => {
 							<AuthHandlerMenu
 								onLoginOpen={onLoginOpen}
 								onSignUpOpen={onSignUpOpen}
-								user={user as IUser | undefined}
+								user={user as _User | undefined}
 							/>
 						</NavbarItem>
 					</div>

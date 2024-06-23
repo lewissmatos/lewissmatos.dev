@@ -1,9 +1,4 @@
-import { setServerLanguage } from "@/app/actions/language.action";
-import { RootState, useAppSelector } from "@/redux/appStore";
-import {
-	AppLanguage,
-	setLanguage,
-} from "@/redux/reducers/preferences/preferencesSlice";
+import { AppLanguage, usePreferencesStore } from "@/store/preferences.store";
 import {
 	Button,
 	Dropdown,
@@ -30,13 +25,10 @@ const languages = [
 ];
 
 const LanguageSelector = () => {
-	const dispatch = useDispatch();
-	const language = useAppSelector(
-		(state: RootState) => state.preferences.language
-	);
-
+	const language = usePreferencesStore((state) => state.language);
+	const setLanguage = usePreferencesStore((state) => state.setLanguage);
 	const onChoseLanguage = (lang: AppLanguage) => {
-		dispatch(setLanguage(lang));
+		setLanguage(lang);
 	};
 
 	return (
@@ -54,7 +46,6 @@ const LanguageSelector = () => {
 						<DropdownItem
 							key={lang.key}
 							onClick={async () => {
-								await setServerLanguage(lang.key as AppLanguage);
 								onChoseLanguage(lang.key as AppLanguage);
 							}}
 						>
