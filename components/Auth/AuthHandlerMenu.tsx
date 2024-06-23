@@ -22,6 +22,7 @@ const AuthHandlerMenu: FC<AuthHandlerMenuProps> = ({
 	user,
 }) => {
 	const { translate } = useLocale();
+
 	const isAdmin = user?.role?.name === "admin";
 	const { signOut } = useAuthService();
 	return (
@@ -42,7 +43,12 @@ const AuthHandlerMenu: FC<AuthHandlerMenuProps> = ({
 			</DropdownTrigger>
 			<DropdownMenu variant="light">
 				{Boolean(user) ? (
-					<DropdownItem key="logout" onClick={signOut}>
+					<DropdownItem
+						key="logout"
+						onClick={async () => {
+							await signOut();
+						}}
+					>
 						<span>{translate("authHandlerMenu.logout")}</span>
 					</DropdownItem>
 				) : (

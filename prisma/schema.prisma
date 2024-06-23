@@ -15,9 +15,9 @@ datasource db {
 
 model User {
   id             String @id @default(auto()) @map("_id") @db.ObjectId
-  name           String?
-  email          String? @unique
-  password       String?
+  name           String
+  email          String @unique
+  password       String
   createdAt      DateTime @default(now())
   avatarUrl      String?
   roleId         String @db.ObjectId
@@ -33,27 +33,32 @@ model Role {
 
 model Project {
   id            String @id @default(auto()) @map("_id") @db.ObjectId
-  name          String?
-  description   String?
-  coverUrl      String?
-  screenshots   String[] @default([])
+  name          String
+  description   String
+  coverUrl      String
   technologies  String[] @default([])
-  startedAt     DateTime @default(now())
-  finishedAt    DateTime @default(now())
+  screenshots   String[] @default([])
+  startedAt     DateTime
+  finishedAt    DateTime?
   url           String?
   repoUrl       String?
+  isActive      Boolean  @default(true)
+  posts         Post[]
 }
 model Post {
   id                String @id @default(auto()) @map("_id") @db.ObjectId
-  title             String?
+  title             String
   coverUrl          String?
-  lastModifiedDate  DateTime
-  publishedDate     DateTime
+  lastModifiedDate  DateTime?
+  publishedDate     DateTime @default(now())
   author            User @relation(fields: [authorId], references: [id])
   elements          PostElement[]
   authorId          String @db.ObjectId
   tags              String[]
-  references        Json
+  references        Json 
+  isActive          Boolean  @default(true)
+  projectId         String? @db.ObjectId
+  project           Project? @relation(fields: [projectId], references: [id])
 }
 
 model PostElement {
@@ -61,6 +66,6 @@ model PostElement {
   postId          String @db.ObjectId
   elementOrder    Int
   elementOptions  Json
-  content         String?
+  content         String
   post            Post @relation(fields: [postId], references: [id])
 }

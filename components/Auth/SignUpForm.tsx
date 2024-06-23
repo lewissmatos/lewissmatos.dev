@@ -91,7 +91,7 @@ const SignUpForm: FC<SignUpFormProps> = ({ isOpen, onOpenChange }) => {
 									isLoading={isSubmitting}
 									color="primary"
 									type="submit"
-									disabled={isSubmitting}
+									isDisabled={isSubmitting}
 								>
 									{!isSubmitting
 										? translate("authHandlerMenu.signUp")

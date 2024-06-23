@@ -76,7 +76,7 @@ const LoginForm: FC<LoginFormProps> = ({ isOpen, onOpenChange }) => {
 									isLoading={isSubmitting}
 									color="primary"
 									type="submit"
-									disabled={isSubmitting}
+									isDisabled={isSubmitting}
 								>
 									{!isSubmitting
 										? translate("authHandlerMenu.login")

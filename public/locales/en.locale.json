@@ -40,5 +40,40 @@
 		"signUpFailed": "Sign up failed",
 		"loginFailed": "Login failed"
 	},
-	"addProjectForm": { "title": "Add project", "submit": "Add" }
+	"addProjectForm": {
+		"title": "Add project",
+		"submit": "Add",
+		"uploadCoverImage": "Upload cover image",
+		"updateCoverImage": "Update cover image",
+		"uploadScreenshots": "Upload screenshots",
+		"updateScreenshots": "Update screenshots",
+		"propIsRequired": "'{prop}' is required"
+	},
+	"projectCard": {
+		"seeMore": "See more",
+		"edit": "Edit",
+		"delete": "Delete",
+		"inProgress": "In progress"
+	},
+	"deleteProjectModal": {
+		"title": "Are you sure you want to delete this project?",
+		"confirm": "Confirm",
+		"cancel": "Cancel",
+		"description": "To delete this project, you need to write the project name in the text field.",
+		"inputPlaceholder": "Write the project name"
+	},
+	"startedAt": "Started at",
+	"finishedAt": "Finished at",
+	"technologies": "Technologies",
+	"coverUrl": "Cover image",
+	"url": "URL",
+	"repoUrl": "Repository URL",
+	"description": "Description",
+	"projectId": "Project ID",
+	"projectName": "Project name",
+	"projectDescription": "Project description",
+	"projectCoverUrl": "Project cover image",
+	"projectUrl": "Project URL",
+	"projectRepoUrl": "Project repository URL",
+	"projectTechnologies": "Project technologies"
 }

@@ -7,7 +7,16 @@ export type LocaleOptions = {
 	capitalize?: boolean;
 	uppercase?: boolean;
 	lowercase?: boolean;
-	replace?: { [key: string]: string | number };
+	replace?: {
+		values: { [key: string]: string | number };
+		withTranslation?: boolean;
+	};
+	mutate?: {
+		when: boolean;
+		value: string;
+		withTranslation?: boolean;
+		endAdornment?: string;
+	};
 };
 const useLocale = (currentLang?: AppLanguage) => {
 	const language: AppLanguage =
@@ -27,7 +36,7 @@ const useLocale = (currentLang?: AppLanguage) => {
 	return { translate };
 };
 
-const getKey = (key: string, localeData: {}): string => {
+export const getKey = (key: string, localeData: {}): string => {
 	if (!key) {
 		return "";
 	}
@@ -41,10 +50,11 @@ const getKey = (key: string, localeData: {}): string => {
 		?.toString();
 };
 
-const formatLocaleValue = (
+export const formatLocaleValue = (
 	value: string,
 	options: LocaleOptions = {}
 ): string => {
+	const { translate } = useLocale();
 	if (options.capitalize) {
 		value = value.charAt(0).toUpperCase() + value.slice(1);
 	}
@@ -59,13 +69,31 @@ const formatLocaleValue = (
 
 	if (options.replace) {
 		let replacedValue = value;
-		Object.entries(options.replace).forEach(([key, value]) => {
+		Object.entries(options.replace.values).forEach(([key, value]) => {
+			const mustTranslate = options.replace?.withTranslation || false;
+			const finalValue = mustTranslate
+				? translate(value?.toString())
+				: value?.toString();
 			replacedValue = replacedValue?.replace(
 				new RegExp(`{${key}}`, "g"),
-				value?.toString()
+				finalValue
 			);
 		});
 		value = replacedValue;
+	}
+
+	if (options.mutate) {
+		const {
+			when,
+			value: newValue,
+			withTranslation,
+			endAdornment,
+		} = options.mutate;
+		if (when) {
+			value = `${withTranslation ? translate(newValue) : newValue}${
+				endAdornment ?? ""
+			} `;
+		}
 	}
 
 	return value;

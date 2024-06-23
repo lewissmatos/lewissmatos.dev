@@ -20,6 +20,11 @@ const config: Config = {
 	theme: {
 		extend: {},
 	},
+	variants: {
+		extend: {
+			opacity: ["group-hover"],
+		},
+	},
 	plugins: [
 		nextui({
 			themes: {

@@ -40,5 +40,40 @@
 		"signUpFailed": "Error al registrarse",
 		"loginFailed": "Error al iniciar sesión"
 	},
-	"addProjectForm": { "title": "Agregar proyecto", "submit": "Agregar" }
+	"addProjectForm": {
+		"title": "Agregar proyecto",
+		"submit": "Agregar",
+		"uploadCoverImage": "Subir imagen de portada",
+		"updateCoverImage": "Actualizar imagen de portada",
+		"uploadScreenshots": "Subir capturas de pantalla",
+		"updateScreenshots": "Actualizar capturas de pantalla",
+		"propIsRequired": "'{prop}' es requerido"
+	},
+	"projectCard": {
+		"seeMore": "Ver más",
+		"edit": "Editar",
+		"delete": "Remover",
+		"inProgress": "En progreso"
+	},
+	"deleteProjectModal": {
+		"title": "¿Estás seguro que quieres eliminar este proyecto?",
+		"confirm": "Confirmar",
+		"cancel": "Cancelar",
+		"description": "Para eliminar este proyecto, debes escribir el nombre del proyecto en el campo de texto.",
+		"inputPlaceholder": "Escriba el nombre del proyecto"
+	},
+	"staredAt": "Iniciado en",
+	"finishedAt": "Finalizado en",
+	"technologies": "Tecnologías",
+	"coverUrl": "Imagen de portada",
+	"url": "URL",
+	"repoUrl": "URL del repositorio",
+	"description": "Descripción",
+	"projectId": "ID del proyecto",
+	"projectName": "Nombre del proyecto",
+	"projectDescription": "Descripción del proyecto",
+	"projectCoverUrl": "Imagen de portada del proyecto",
+	"projectUrl": "URL del proyecto",
+	"projectRepoUrl": "URL del repositorio del proyecto",
+	"projectTechnologies": "Tecnologías del proyecto"
 }

@@ -34,9 +34,9 @@ const NavLink: FC<NavLinkProps> = ({ href, label }) => {
 			href={`/${href}`}
 			className={`${
 				isSelected
-					? "font-bold text-xl transition-all duration-300 "
-					: "text-gray-500"
-			} cursor-pointer`}
+					? "font-bold text-md sm:text-xl transition-all duration-300 "
+					: "text-gray-500 text-md sm:text-md "
+			} cursor-pointer "`}
 		>
 			{label}
 		</Link>
@@ -101,8 +101,8 @@ const AppNavbar = () => {
 					<NavbarBrand>
 						<NavbarItem>
 							<Link href="/home">
-								<span className="font-bold text-md mr-1 cursor-pointer">
-									lewissmatos.devs
+								<span className="font-bold text-md md:text-xl mr-3 cursor-pointer">
+									lewissmatos.dev
 								</span>
 							</Link>
 						</NavbarItem>
@@ -140,11 +140,7 @@ const AppNavbar = () => {
 								key={`${item}-${index}`}
 								onClick={() => setIsMenuOpen(false)}
 							>
-								<NavLink
-									href={item}
-									label={translate(`navbar.${item}`)}
-									className="w-full"
-								/>
+								<NavLink href={item} label={translate(`navbar.${item}`)} />
 							</NavbarMenuItem>
 						))}
 					</div>

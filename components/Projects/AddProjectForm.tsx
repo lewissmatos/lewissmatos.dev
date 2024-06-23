@@ -14,19 +14,24 @@ import {
 import { useLocale } from "@/hooks/useLocale";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { Project } from "@prisma/client";
-import axios from "axios";
 import { format } from "date-fns";
-import { useRouter } from "next/navigation";
+import { AxiosResponse } from "axios";
+import UploadToCloudinary from "../Cloudinary/UploadToCloudinary";
 
 type AddProjectProps = {
 	isOpen: boolean;
 	onOpen: () => void;
 	onOpenChange: () => void;
+	submit: (payload: Project) => Promise<AxiosResponse<Project>>;
 };
 
-const AddProjectForm: FC<AddProjectProps> = ({ isOpen, onOpenChange }) => {
+const AddProjectForm: FC<AddProjectProps> = ({
+	isOpen,
+	onOpenChange,
+	submit,
+}) => {
 	const { translate } = useLocale();
-	const router = useRouter();
+
 	const {
 		register,
 		handleSubmit,
@@ -34,17 +39,45 @@ const AddProjectForm: FC<AddProjectProps> = ({ isOpen, onOpenChange }) => {
 		reset,
 		setValue,
 		watch,
-	} = useForm<Project>();
+		setError,
+	} = useForm<Project>({
+		defaultValues: {
+			technologies: [],
+			screenshots: [],
+		},
+	});
 	const onSubmit: SubmitHandler<Project> = async (payload) => {
-		const res = await axios.post("/api/projects", {
-			...payload,
-		});
+		const res = await submit(payload);
 		const isSuccess = res.status === 201;
 		if (isSuccess) {
 			reset();
 			onOpenChange();
-			router.refresh();
 		}
+	};
+
+	const onUploadCover = (url: string | undefined) => {
+		if (!url) return;
+		setValue("coverUrl", url);
+	};
+
+	const onUploadScreenshots = (url: string | undefined) => {
+		if (!url) return;
+		setValue("screenshots", [...(watch("screenshots") || []), url]);
+	};
+
+	const FieldErrorMessage = ({ prop }: { prop: keyof Project }) => {
+		if (!errors[prop]) return null;
+		return (
+			<span className="text text-xs text-red-500">
+				{translate("addProjectForm.propIsRequired", {
+					replace: {
+						values: { prop },
+						withTranslation: true,
+					},
+				})}
+				{" *"}
+			</span>
+		);
 	};
 	return (
 		<Modal
@@ -66,24 +99,25 @@ const AddProjectForm: FC<AddProjectProps> = ({ isOpen, onOpenChange }) => {
 						<Input
 							label={translate("name")}
 							type="text"
-							variant="flat"
-							color={errors.name ? "danger" : "default"}
-							{...register("name", { required: "Project name is required" })}
+							{...register("name", { required: true })}
 						/>
+						<FieldErrorMessage prop="name" />
 						<Textarea
 							label={translate("description")}
 							type="text"
 							variant="flat"
-							color={errors.description ? "danger" : "default"}
-							{...register("description")}
+							{...register("description", {
+								required: true,
+							})}
 						/>
-						<Input
-							label={translate("coverUrl")}
-							type="text"
-							variant="flat"
-							color={errors.coverUrl ? "danger" : "default"}
-							{...register("coverUrl")}
+						<FieldErrorMessage prop="description" />
+
+						<UploadToCloudinary
+							options={{ maxFiles: 1 }}
+							onUploadCover={onUploadCover}
 						/>
+						<FieldErrorMessage prop="coverUrl" />
+						<UploadToCloudinary onUploadScreenshots={onUploadScreenshots} />
 						<h6 className="text text-sm mb-0">{translate("technologies")}</h6>
 						<div className="flex flex-wrap items-start justify-start gap-2">
 							{watch("technologies")?.map((tech, index) => {
@@ -96,6 +130,7 @@ const AddProjectForm: FC<AddProjectProps> = ({ isOpen, onOpenChange }) => {
 												techs.filter((t) => t !== tech)
 											);
 										}}
+										key={tech}
 									>
 										{tech}
 									</Chip>
@@ -108,6 +143,7 @@ const AddProjectForm: FC<AddProjectProps> = ({ isOpen, onOpenChange }) => {
 								onClick={() => {
 									const techs = (watch("technologies") as string[]) || [];
 									const newTech = prompt("Enter a new technology");
+									if (!newTech || techs.includes(newTech)) return;
 									if (newTech) {
 										setValue("technologies", [...techs, newTech]);
 									}
@@ -119,6 +155,9 @@ const AddProjectForm: FC<AddProjectProps> = ({ isOpen, onOpenChange }) => {
 						<div className="flex flex-row gap-3">
 							<DatePicker
 								label={translate("startedAt")}
+								{...(register("startedAt", {
+									required: true,
+								}) as unknown as any)}
 								onChange={(date) => {
 									if (!date) return;
 									const value = format(
@@ -140,6 +179,7 @@ const AddProjectForm: FC<AddProjectProps> = ({ isOpen, onOpenChange }) => {
 								}}
 							/>
 						</div>
+						<FieldErrorMessage prop="startedAt" />
 						<Input
 							label={translate("url")}
 							type="text"
@@ -160,11 +200,22 @@ const AddProjectForm: FC<AddProjectProps> = ({ isOpen, onOpenChange }) => {
 							isLoading={isSubmitting}
 							color="primary"
 							type="submit"
-							disabled={isSubmitting}
+							isDisabled={isSubmitting}
+							onClick={() => {
+								if (!watch("coverUrl")) {
+									setError("coverUrl", { type: "required" });
+									return;
+								}
+							}}
 						>
-							{!isSubmitting
-								? translate("addProjectForm.submit")
-								: `${translate("loading")}...`}
+							{translate("addProjectForm.submit", {
+								mutate: {
+									when: isSubmitting,
+									value: "loading",
+									withTranslation: true,
+									endAdornment: "...",
+								},
+							})}
 						</Button>
 					</ModalFooter>
 				</form>
