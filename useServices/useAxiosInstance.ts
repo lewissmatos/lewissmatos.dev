@@ -1,7 +1,8 @@
-import axios, { AxiosInstance, AxiosResponse } from "axios";
-import toast from "react-hot-toast";
+import useToast from "@/hooks/useToast";
+import axios, { AxiosInstance } from "axios";
 
 export const useAxiosInstance = () => {
+	const { error: toastError, success: toastSuccess } = useToast();
 	const api: AxiosInstance = axios.create({
 		// baseURL: process.env.,
 		timeout: 60000, // Timeout in milliseconds
@@ -21,16 +22,20 @@ export const useAxiosInstance = () => {
 	// Add a response interceptor
 	api.interceptors.response.use(
 		(response) => {
-			// Any status code that lie within the range of 2xx cause this function to trigger
-			// Do something with response data
-			// dispatch(setTokenReducer(response?.data?.token));
+			const isSuccess = response?.data?.isSuccess;
+			const message = response?.data?.message;
+			if (isSuccess) {
+				toastSuccess(message);
+			} else {
+				toastError(message);
+			}
 			return response;
 		},
 		(error) => {
 			// Any status codes that falls outside the range of 2xx cause this function to trigger
 			// Do something with response error
 			if (error?.response.status === 500) {
-				toast.error(error.response.data.message);
+				toastError(error.response.data.message);
 			}
 			if (error?.response.status === 401) {
 			}
@@ -67,6 +72,6 @@ export const useAxiosInstance = () => {
 		axiosPost,
 		axiosPut,
 		axiosRemove,
-		axiosInstance: api,
+		_axiosInstance: api,
 	};
 };

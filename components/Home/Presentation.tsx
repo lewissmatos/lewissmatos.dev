@@ -2,16 +2,26 @@
 import { Avatar } from "@nextui-org/react";
 import SocialLink from "./SocialLink";
 import profile from "../../public/images/profile.jpeg";
-import { useAppDataLanguage } from "@/hooks/useAppDataLanguage";
+import { ISocialLink } from "@/interfaces/app-data.interface";
+import { FC } from "react";
 const socialMediaIcons = [
 	"icon-[hugeicons--linkedin-01]",
 	"icon-[hugeicons--github-01]",
 	"icon-[basil--gmail-outline]",
 	"icon-[mdi--whatsapp]",
 ];
-const Presentation = () => {
-	const { portfolioData } = useAppDataLanguage();
-	const { fullName, role, socialLinks } = portfolioData;
+
+type PresentationProps = {
+	fullName: string;
+	role: string;
+	socialLinks: ISocialLink[];
+};
+
+const Presentation: FC<PresentationProps> = ({
+	fullName,
+	role,
+	socialLinks,
+}) => {
 	//TODO
 	const downloadPDF = () => {
 		const link = document.createElement("a");

@@ -42,12 +42,13 @@
 	},
 	"addProjectForm": {
 		"title": "Agregar proyecto",
-		"submit": "Agregar",
+		"saveChanges": "Guardar cambios",
 		"uploadCoverImage": "Subir imagen de portada",
 		"updateCoverImage": "Actualizar imagen de portada",
 		"uploadScreenshots": "Subir capturas de pantalla",
 		"updateScreenshots": "Actualizar capturas de pantalla",
-		"propIsRequired": "'{prop}' es requerido"
+		"propIsRequired": "'{prop}' es requerido",
+		"elementsAttached": "Elementos adjuntos"
 	},
 	"projectCard": {
 		"seeMore": "Ver más",

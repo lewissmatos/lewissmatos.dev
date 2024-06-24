@@ -2,17 +2,20 @@
 import React from "react";
 import SectionTitle from "./SectionTitle";
 import { Tooltip } from "@nextui-org/react";
-import { useAppDataLanguage } from "@/hooks/useAppDataLanguage";
 import { useLocale } from "@/hooks/useLocale";
+import { IWorkExperience } from "@/interfaces/app-data.interface";
 
-const WorkExperience = () => {
-	const { portfolioData } = useAppDataLanguage();
+const WorkExperience = ({
+	workExperience,
+}: {
+	workExperience: IWorkExperience[];
+}) => {
 	const { translate } = useLocale();
 	return (
 		<section>
 			<SectionTitle>{translate("homePage.workExperience")}</SectionTitle>
 			<div className="mt-3">
-				{portfolioData.workExperience.map((job) => (
+				{workExperience.map((job) => (
 					<div className="flex flex-col mb-4" key={job.roleTitle}>
 						<div className="grid grid-cols-1 sm:grid-cols-5 gap-1">
 							<span className="sm:text-start font-semibold text-lg sm:text-xl col-span-full sm:col-span-4">

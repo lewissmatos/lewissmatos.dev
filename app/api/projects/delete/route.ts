@@ -16,14 +16,17 @@ export const DELETE = async (
 
 			if (!project)
 				return NextResponse.json(
-					{ data: null, message: "projectNotFound" },
+					{ data: null, message: "projectNotFound", isSuccess: false },
 					{ status: 404 }
 				);
 
-			return NextResponse.json({ data: project }, { status: 201 });
+			return NextResponse.json(
+				{ data: project, isSuccess: true, message: "executedSuccessfully" },
+				{ status: 200 }
+			);
 		} catch (error) {
 			return NextResponse.json(
-				{ data: null, message: "errorRemovingProject" },
+				{ data: null, message: "errorRemovingProject", isSuccess: false },
 				{ status: 500 }
 			);
 		}

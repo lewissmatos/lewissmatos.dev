@@ -5,26 +5,23 @@ import { Button, useDisclosure } from "@nextui-org/react";
 import ConfirmDeleteModal from "./ConfirmDeleteModal";
 import { useProjectsService } from "@/useServices/useProjectsService";
 import AddProjectForm from "./AddProjectForm";
-import { RootState, useAppSelector } from "@/redux/appStore";
 import { useLocale } from "@/hooks/useLocale";
 import { useAuthStore } from "@/store/auth.store";
 
 const ProjectsList = () => {
+	const user = useAuthStore((state) => state.user);
 	const { projects, add, update, remove, isLoading } = useProjectsService();
+	const { translate } = useLocale();
 	const {
 		isOpen: isOpenDelete,
 		onOpen: onOpenDelete,
 		onOpenChange: onOpenChangeDelete,
 	} = useDisclosure();
-
 	const {
 		isOpen: isOpenAdd,
 		onOpen: onOpenAdd,
 		onOpenChange: onOpenChangeAdd,
 	} = useDisclosure();
-
-	const { translate } = useLocale();
-	const user = useAuthStore((state) => state.user);
 	const [selectedProject, setSelectedProject] = React.useState<Project>();
 
 	const isAdmin = user?.role?.name === "admin";
@@ -42,14 +39,27 @@ const ProjectsList = () => {
 		}
 	};
 
-	const onSubmit = async (payload: Project) => await add(payload);
+	const handleOpenUpdateProject = (project: Project) => {
+		setSelectedProject(project);
+		onOpenAdd();
+	};
+
+	const onSubmit = async (payload: Project) =>
+		await (!!selectedProject ? update(payload) : add(payload));
+
 	return (
 		<>
 			<AddProjectForm
 				isOpen={isOpenAdd}
 				onOpen={onOpenAdd}
-				onOpenChange={onOpenChangeAdd}
+				onOpenChange={() => {
+					if (isOpenAdd) {
+						setSelectedProject(undefined);
+					}
+					onOpenChangeAdd();
+				}}
 				submit={onSubmit}
+				defaultValues={selectedProject}
 			/>
 			<ConfirmDeleteModal
 				isOpen={isOpenDelete}
@@ -89,6 +99,7 @@ const ProjectsList = () => {
 					return (
 						<ProjectCard
 							handleOpenDeleteProject={handleOpenDeleteProject}
+							handleOpenUpdateProject={handleOpenUpdateProject}
 							project={project}
 							key={project.id}
 						/>

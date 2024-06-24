@@ -1,4 +1,4 @@
-import React, { FC } from "react";
+import React, { FC, useEffect } from "react";
 import {
 	Button,
 	Modal,
@@ -14,21 +14,26 @@ import {
 import { useLocale } from "@/hooks/useLocale";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { Project } from "@prisma/client";
-import { format } from "date-fns";
+import { format, parseISO, formatISO } from "date-fns";
 import { AxiosResponse } from "axios";
 import UploadToCloudinary from "../Cloudinary/UploadToCloudinary";
+import { parseDate } from "@internationalized/date";
 
 type AddProjectProps = {
 	isOpen: boolean;
 	onOpen: () => void;
 	onOpenChange: () => void;
-	submit: (payload: Project) => Promise<AxiosResponse<Project>>;
+	submit: (
+		payload: Project
+	) => Promise<AxiosResponse<{ data: Project; isSuccess: boolean }>>;
+	defaultValues?: Project;
 };
 
 const AddProjectForm: FC<AddProjectProps> = ({
 	isOpen,
 	onOpenChange,
 	submit,
+	defaultValues,
 }) => {
 	const { translate } = useLocale();
 
@@ -42,13 +47,34 @@ const AddProjectForm: FC<AddProjectProps> = ({
 		setError,
 	} = useForm<Project>({
 		defaultValues: {
-			technologies: [],
-			screenshots: [],
+			coverUrl: defaultValues?.coverUrl,
+			screenshots: defaultValues?.screenshots,
 		},
 	});
-	const onSubmit: SubmitHandler<Project> = async (payload) => {
+
+	useEffect(() => {
+		if (defaultValues?.name) {
+			reset(defaultValues);
+		} else {
+			reset({
+				name: "",
+				description: "",
+				startedAt: new Date(),
+				finishedAt: new Date(),
+				url: "",
+				repoUrl: "",
+				coverUrl: "",
+				technologies: [],
+				screenshots: [],
+			});
+		}
+	}, [defaultValues?.name]);
+
+	const isEditing = !!defaultValues;
+
+	const onSubmit: SubmitHandler<Project | any> = async (payload) => {
 		const res = await submit(payload);
-		const isSuccess = res.status === 201;
+		const isSuccess = res.data?.isSuccess;
 		if (isSuccess) {
 			reset();
 			onOpenChange();
@@ -79,11 +105,11 @@ const AddProjectForm: FC<AddProjectProps> = ({
 			</span>
 		);
 	};
+
 	return (
 		<Modal
 			isOpen={isOpen}
 			onOpenChange={() => {
-				reset();
 				onOpenChange();
 			}}
 			placement="center"
@@ -92,7 +118,9 @@ const AddProjectForm: FC<AddProjectProps> = ({
 			<ModalContent className="overflow-x-hidden ">
 				<form onSubmit={handleSubmit(onSubmit)}>
 					<ModalHeader className="flex flex-col gap-1">
-						{translate("addProjectForm.title")}
+						{isEditing
+							? defaultValues?.name
+							: translate("addProjectForm.title")}
 					</ModalHeader>
 
 					<ModalBody className="flex flex-col gap-3">
@@ -113,11 +141,15 @@ const AddProjectForm: FC<AddProjectProps> = ({
 						<FieldErrorMessage prop="description" />
 
 						<UploadToCloudinary
+							defaultValues={watch("coverUrl") ? [watch("coverUrl")] : []}
 							options={{ maxFiles: 1 }}
 							onUploadCover={onUploadCover}
 						/>
 						<FieldErrorMessage prop="coverUrl" />
-						<UploadToCloudinary onUploadScreenshots={onUploadScreenshots} />
+						<UploadToCloudinary
+							onUploadScreenshots={onUploadScreenshots}
+							defaultValues={watch("screenshots")}
+						/>
 						<h6 className="text text-sm mb-0">{translate("technologies")}</h6>
 						<div className="flex flex-wrap items-start justify-start gap-2">
 							{watch("technologies")?.map((tech, index) => {
@@ -166,9 +198,19 @@ const AddProjectForm: FC<AddProjectProps> = ({
 									);
 									setValue("startedAt", value as unknown as Date);
 								}}
+								defaultValue={
+									defaultValues
+										? parseDate(
+												format(defaultValues.startedAt, "yyyy-MM-dd")
+										  ).add({ days: 1 })
+										: null
+								}
 							/>
 							<DatePicker
 								label={translate("finishedAt")}
+								{...(register("finishedAt", {
+									required: true,
+								}) as unknown as any)}
 								onChange={(date) => {
 									if (!date) return;
 									const value = format(
@@ -177,6 +219,13 @@ const AddProjectForm: FC<AddProjectProps> = ({
 									);
 									setValue("finishedAt", value as unknown as Date);
 								}}
+								defaultValue={
+									defaultValues?.finishedAt
+										? parseDate(
+												format(defaultValues?.finishedAt, "yyyy-MM-dd")
+										  ).add({ days: 1 })
+										: null
+								}
 							/>
 						</div>
 						<FieldErrorMessage prop="startedAt" />
@@ -208,7 +257,7 @@ const AddProjectForm: FC<AddProjectProps> = ({
 								}
 							}}
 						>
-							{translate("addProjectForm.submit", {
+							{translate("addProjectForm.saveChanges", {
 								mutate: {
 									when: isSubmitting,
 									value: "loading",

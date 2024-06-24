@@ -4,7 +4,9 @@ import { NextResponse } from "next/server";
 
 export const POST = async (
 	req: Request
-): Promise<NextResponse<{ data: Project | null }> | undefined> => {
+): Promise<
+	NextResponse<{ data: Project | null; isSuccess: boolean | null }> | undefined
+> => {
 	const body = await req.json();
 	if (prismaClient) {
 		try {
@@ -12,12 +14,19 @@ export const POST = async (
 				data: { ...body },
 			});
 
-			if (!project) return NextResponse.json({ data: null }, { status: 404 });
+			if (!project)
+				return NextResponse.json(
+					{ data: null, isSuccess: false },
+					{ status: 404 }
+				);
 
-			return NextResponse.json({ data: project }, { status: 201 });
+			return NextResponse.json(
+				{ data: project, isSuccess: true },
+				{ status: 201 }
+			);
 		} catch (error) {
 			return NextResponse.json(
-				{ data: null, message: "errorCreatingProject" },
+				{ data: null, message: "errorCreatingProject", isSuccess: false },
 				{ status: 500 }
 			);
 		}

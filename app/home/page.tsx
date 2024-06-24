@@ -1,3 +1,4 @@
+"use client";
 import { Divider } from "@nextui-org/react";
 import {
 	AboutMe,
@@ -6,19 +7,32 @@ import {
 	Skills,
 	WorkExperience,
 } from "@/components/Home";
+import { useAppDataLanguage } from "@/hooks/useAppDataLanguage";
 
 const Resume = () => {
+	const { portfolioData } = useAppDataLanguage();
+	const {
+		fullName,
+		role,
+		socialLinks,
+		aboutMe,
+		technicalAboutMe,
+		educationBackground,
+		workExperience,
+		skills,
+	} = portfolioData;
+
 	return (
 		<div className="flex flex-col gap-4 pb-4">
-			<Presentation />
+			<Presentation fullName={fullName} role={role} socialLinks={socialLinks} />
 			<Divider />
-			<AboutMe />
+			<AboutMe aboutMe={aboutMe} technicalAboutMe={technicalAboutMe} />
 			<Divider />
-			<WorkExperience />
+			<WorkExperience workExperience={workExperience} />
 			<Divider />
-			<Skills />
+			<Skills skills={skills} />
 			<Divider />
-			<EducationBackground />
+			<EducationBackground educationBackground={educationBackground} />
 		</div>
 	);
 };

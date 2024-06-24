@@ -2,15 +2,16 @@ import prismaClient from "@/app/lib/prisma-db";
 import { Project } from "@prisma/client";
 import { NextResponse } from "next/server";
 
-export const UPDATE = async (
+export const PUT = async (
 	req: Request
 ): Promise<NextResponse<{ data: Project | null }> | undefined> => {
 	const body = await req.json();
 	if (prismaClient) {
+		const { id, ...payload } = body;
 		try {
 			const project = await prismaClient.project.update({
-				where: { id: body.id },
-				data: { ...body },
+				where: { id },
+				data: { ...payload },
 			});
 
 			if (!project)
@@ -19,10 +20,13 @@ export const UPDATE = async (
 					{ status: 404 }
 				);
 
-			return NextResponse.json({ data: project }, { status: 201 });
+			return NextResponse.json(
+				{ data: project, isSuccess: true, message: "executedSuccessfully" },
+				{ status: 200 }
+			);
 		} catch (error) {
 			return NextResponse.json(
-				{ data: null, message: "errorCreatingProject" },
+				{ data: null, message: "errorCreatingProject", isSuccess: false },
 				{ status: 500 }
 			);
 		}

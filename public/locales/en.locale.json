@@ -42,12 +42,13 @@
 	},
 	"addProjectForm": {
 		"title": "Add project",
-		"submit": "Add",
+		"saveChanges": "Save changes",
 		"uploadCoverImage": "Upload cover image",
 		"updateCoverImage": "Update cover image",
 		"uploadScreenshots": "Upload screenshots",
 		"updateScreenshots": "Update screenshots",
-		"propIsRequired": "'{prop}' is required"
+		"propIsRequired": "'{prop}' is required",
+		"elementsAttached": "Elements attached"
 	},
 	"projectCard": {
 		"seeMore": "See more",

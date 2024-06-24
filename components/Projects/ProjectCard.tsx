@@ -10,17 +10,18 @@ import {
 } from "@nextui-org/react";
 import { Project } from "@prisma/client";
 import { format } from "date-fns";
-import { useAppSelector } from "@/redux/appStore";
 import { useLocale } from "@/hooks/useLocale";
 import { useAuthStore } from "@/store/auth.store";
 
 type ProjectCardProps = {
 	project: Project;
 	handleOpenDeleteProject: (project: Project) => void;
+	handleOpenUpdateProject: (project: Project) => void;
 };
 const ProjectCard = ({
 	project,
 	handleOpenDeleteProject,
+	handleOpenUpdateProject,
 }: ProjectCardProps) => {
 	const user = useAuthStore((state) => state.user);
 	const { translate } = useLocale();
@@ -33,8 +34,13 @@ const ProjectCard = ({
 			<CardHeader className="absolute z-10 top-1 flex-row items-start justify-end">
 				{canEdit && (
 					<div className="flex gap-2 opacity-0 group-hover:opacity-100 transition-all duration-200">
-						<Button isIconOnly size="sm" variant="flat">
-							<span className="icon-[iconoir--edit-pencil] text-white text-xl "></span>
+						<Button
+							isIconOnly
+							size="sm"
+							variant="flat"
+							onClick={() => handleOpenUpdateProject(project)}
+						>
+							<span className="icon-[iconoir--edit-pencil] text-xl "></span>
 						</Button>
 						<Button
 							isIconOnly
@@ -42,7 +48,7 @@ const ProjectCard = ({
 							variant="flat"
 							onClick={() => handleOpenDeleteProject(project)}
 						>
-							<span className="icon-[material-symbols--delete-forever-outline] text-white text-xl"></span>
+							<span className="icon-[material-symbols--delete-forever-outline] text-xl"></span>
 						</Button>
 					</div>
 				)}

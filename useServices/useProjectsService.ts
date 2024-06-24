@@ -1,10 +1,12 @@
 import { Project } from "@prisma/client";
 import axios, { AxiosResponse } from "axios";
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
+import { useAxiosInstance } from "./useAxiosInstance";
 
 const useProjectsService = () => {
 	const [projects, setProjects] = useState([]);
 	const [isLoading, setIsLoading] = useState(true);
+	const { axiosPut, axiosPost, axiosRemove } = useAxiosInstance();
 	const get = async () => {
 		setIsLoading(true);
 		const { data } = await axios.get("/api/projects");
@@ -12,19 +14,14 @@ const useProjectsService = () => {
 		setIsLoading(false);
 	};
 
-	const remove = async (id: string) => {
-		await onLoad(axios.delete(`/api/projects/delete?id=${id}`));
-	};
+	const remove = async (id: string) =>
+		await onLoad(axiosRemove(`/api/projects/delete?id=${id}`));
 
-	const update = async (payload: Project) => {
-		await onLoad(axios.put(`/api/projects/update`, payload));
-	};
+	const update = async (payload: Project) =>
+		await onLoad(axiosPut(`/api/projects/update`, payload));
 
-	const add = async (payload: Project) => {
-		const res = await onLoad(axios.post("/api/projects/create", payload));
-
-		return res;
-	};
+	const add = async (payload: Project) =>
+		await onLoad(axiosPost("/api/projects/create", payload));
 
 	const onLoad = async (callback: Promise<AxiosResponse<any>>) => {
 		setIsLoading(true);

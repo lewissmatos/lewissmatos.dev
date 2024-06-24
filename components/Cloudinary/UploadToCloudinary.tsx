@@ -1,21 +1,30 @@
 import { useLocale } from "@/hooks/useLocale";
 import { Button } from "@nextui-org/react";
 import { CldUploadWidget } from "next-cloudinary";
-import { FC, useState } from "react";
+import { FC, useEffect, useState } from "react";
 
 import React from "react";
 type UploadToCloudinaryProps = {
 	options?: any;
 	onUploadCover?: (url: string | undefined) => void;
 	onUploadScreenshots?: (url: string | undefined) => void;
+	defaultValues?: string[];
 };
 const UploadToCloudinary: FC<UploadToCloudinaryProps> = ({
 	options,
 	onUploadCover,
 	onUploadScreenshots,
+	defaultValues,
 }) => {
-	const [elements, setElements] = useState<string[] | null>(null);
 	const { translate } = useLocale();
+	const [elements, setElements] = useState<string[] | null>(
+		defaultValues?.length ? defaultValues : null
+	);
+	useEffect(() => {
+		if (defaultValues?.length) {
+			setElements(defaultValues);
+		}
+	}, [defaultValues]);
 	return (
 		<CldUploadWidget
 			uploadPreset="lewissmatos-site"
@@ -42,8 +51,8 @@ const UploadToCloudinary: FC<UploadToCloudinaryProps> = ({
 				}
 				return (
 					<Button onClick={handleOnClick} size="lg">
-						{elements ? (
-							<div className="flex flex-col gap-1">
+						{elements?.length ? (
+							<div className="flex flex-col">
 								<span>
 									{translate(
 										onUploadCover
@@ -51,10 +60,12 @@ const UploadToCloudinary: FC<UploadToCloudinaryProps> = ({
 											: "addProjectForm.updateScreenshots"
 									)}
 								</span>
-								<span className="text text-xs">{elements?.join(", ")}</span>
+								<span className="text text-xs">
+									{translate("addProjectForm.elementsAttached")}
+								</span>
 							</div>
 						) : (
-							<div className="flex flex-row gap-1">
+							<div className="flex flex-row">
 								<span className="icon-[material-symbols--upload] text-xl"></span>
 								<span>
 									{translate(

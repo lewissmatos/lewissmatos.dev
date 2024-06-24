@@ -1,18 +1,21 @@
 "use client";
 import React from "react";
 import SectionTitle from "./SectionTitle";
-import { useAppDataLanguage } from "@/hooks/useAppDataLanguage";
 import { useLocale } from "@/hooks/useLocale";
+import { IEducationBackground } from "@/interfaces/app-data.interface";
 
-const EducationBackground = () => {
-	const { portfolioData } = useAppDataLanguage();
+const EducationBackground = ({
+	educationBackground,
+}: {
+	educationBackground: IEducationBackground[];
+}) => {
 	const { translate } = useLocale();
 
 	return (
 		<section>
 			<SectionTitle>{translate("homePage.educationBackground")}</SectionTitle>
 			<div className="mt-2 flex flex-col gap-2">
-				{portfolioData.educationBackground.map((education) => (
+				{educationBackground.map((education) => (
 					<div className="flex flex-col mb-4" key={education.institution}>
 						<div className="grid grid-cols-1 sm:grid-cols-5 gap-1">
 							<span className="sm:text-start font-semibold text-lg sm:text-xl col-span-full sm:col-span-4">

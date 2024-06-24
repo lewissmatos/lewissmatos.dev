@@ -5,6 +5,7 @@ import { usePreferencesStore } from "@/store/preferences.store";
 
 const useAppDataLanguage = () => {
 	const language = usePreferencesStore((state) => state.language);
+
 	const appData = {
 		portfolio: {
 			"es-DO": portfolioDataEs,
