@@ -1,7 +1,6 @@
 import { ILogin, ISignUp } from "@/interfaces/auth.interface";
 import { useAxiosInstance } from "./useAxiosInstance";
 import toast from "react-hot-toast";
-import { useDispatch } from "react-redux";
 import {
 	getCsrfToken,
 	getSession,
@@ -12,7 +11,7 @@ import { useLocale } from "@/hooks/useLocale";
 import { useAuthStore } from "@/store/auth.store";
 
 const useAuthService = () => {
-	const { axiosInstance } = useAxiosInstance();
+	const { _axiosInstance } = useAxiosInstance();
 	const setAuth = useAuthStore((state) => state.setAuth);
 	const { translate } = useLocale();
 	const login = async (payload: ILogin) => {
@@ -35,12 +34,6 @@ const useAuthService = () => {
 					throw new Error("User not found");
 				}
 				const response = await getCurrentUser(session?.user?.email);
-				// dispatch(
-				// 	setAuth({
-				// 		user: response.data.data,
-				// 		session: { accessToken: jwt as string },
-				// 	})
-				// );
 				setAuth({
 					user: response.data.data,
 					session: { accessToken: jwt as string },
@@ -56,7 +49,7 @@ const useAuthService = () => {
 	const signUp = async (payload: ISignUp) => {
 		const { name, email, password } = payload;
 		try {
-			const response = await axiosInstance.post("/api/auth/sign-up", {
+			const response = await _axiosInstance.post("/api/auth/sign-up", {
 				name,
 				email,
 				password,
@@ -91,7 +84,7 @@ const useAuthService = () => {
 	};
 
 	const getCurrentUser = async (email: string) => {
-		const user = await axiosInstance.get(`/api/auth/user?email=${email}`);
+		const user = await _axiosInstance.get(`/api/auth/user?email=${email}`);
 		return user;
 	};
 

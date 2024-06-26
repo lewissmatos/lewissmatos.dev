@@ -36,17 +36,17 @@ const NavLink: FC<NavLinkProps> = ({ href, label }) => {
 					? "font-bold text-md sm:text-xl transition-all duration-300 "
 					: "text-gray-500 text-md sm:text-md "
 			} cursor-pointer "`}
+			data-testid={`navbar-${href}`}
 		>
 			{label}
 		</Link>
 	);
 };
 
-const menuItems: string[] = ["home", "projects", "blog"];
+export const menuItems: string[] = ["home", "projects", "blog"];
 const AppNavbar = () => {
 	// const { user } = useAppSelector((state: RootState) => state.auth!);
 	const user = useAuthStore((state) => state.user);
-
 	const { translate } = useLocale();
 	const {
 		isOpen: isLoginOpen,
@@ -87,7 +87,10 @@ const AppNavbar = () => {
 					<NavbarBrand>
 						<NavbarItem>
 							<Link href="/home">
-								<span className="font-bold text-md mr-3 cursor-pointer">
+								<span
+									className="font-bold text-md mr-3 cursor-pointer"
+									data-testid="navbar-brand"
+								>
 									lewissmatos.dev
 								</span>
 							</Link>

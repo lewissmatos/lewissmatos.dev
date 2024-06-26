@@ -8,13 +8,14 @@ const useAppDataLanguage = () => {
 
 	const appData = {
 		portfolio: {
-			"es-DO": portfolioDataEs,
+			"es-MX": portfolioDataEs,
 			"en-US": portfolioDataEn,
 		},
 	};
 
 	return {
-		portfolioData: appData.portfolio[language as AppLanguage],
+		portfolioData:
+			appData.portfolio[language as AppLanguage] ?? portfolioDataEs,
 	};
 };
 

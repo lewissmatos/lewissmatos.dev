@@ -1,7 +1,7 @@
-import create from "zustand";
+import { create } from "zustand";
 import { persist } from "zustand/middleware";
 
-export type AppLanguage = "en-US" | "es-DO" | null;
+export type AppLanguage = "en-US" | "es-MX" | null;
 
 interface AuthStore {
 	language: AppLanguage;
@@ -11,7 +11,6 @@ interface AuthStore {
 export const usePreferencesStore = create(
 	persist<AuthStore>(
 		(set) => ({
-			theme: "light",
 			language: null,
 			setLanguage: (language: AppLanguage) => set({ language }),
 		}),

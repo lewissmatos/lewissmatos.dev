@@ -15,13 +15,13 @@ const langGetter = (lang: AppLanguage | undefined) => {
 
 	const langs = {
 		"en-US": "English",
-		"es-DO": "Español",
+		"es-MX": "Español",
 	};
 	return langs[lang] || _default;
 };
 const languages = [
 	{ key: "en-US", value: "English" },
-	{ key: "es-DO", value: "Español" },
+	{ key: "es-MX", value: "Español" },
 ];
 
 const LanguageSelector = () => {

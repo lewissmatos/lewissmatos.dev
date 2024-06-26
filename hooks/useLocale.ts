@@ -23,7 +23,7 @@ const useLocale = (currentLang?: AppLanguage) => {
 
 	const translate = (key: string, options?: LocaleOptions) => {
 		if (!language) {
-			language = "es-DO";
+			language = "es-MX";
 		}
 		const localeData =
 			language === "en-US" ? englishLocaleData : spanishLocaleData;
@@ -35,70 +35,69 @@ const useLocale = (currentLang?: AppLanguage) => {
 		return value;
 	};
 
-	return { translate };
-};
-
-export const getKey = (key: string, localeData: {}): string => {
-	if (!key) {
-		return "";
-	}
-
-	if (!key.includes(".")) {
-		return localeData[key as keyof {}];
-	}
-	return key
-		?.split(".")
-		?.reduce((acc, cur) => acc?.[cur as keyof {}], localeData)
-		?.toString();
-};
-
-export const formatLocaleValue = (
-	value: string,
-	options: LocaleOptions = {}
-): string => {
-	const { translate } = useLocale();
-	if (options.capitalize) {
-		value = value.charAt(0).toUpperCase() + value.slice(1);
-	}
-
-	if (options.uppercase) {
-		value = value.toUpperCase();
-	}
-
-	if (options.lowercase) {
-		value = value.toLowerCase();
-	}
-
-	if (options.replace) {
-		let replacedValue = value;
-		Object.entries(options.replace.values).forEach(([key, value]) => {
-			const mustTranslate = options.replace?.withTranslation || false;
-			const finalValue = mustTranslate
-				? translate(value?.toString())
-				: value?.toString();
-			replacedValue = replacedValue?.replace(
-				new RegExp(`{${key}}`, "g"),
-				finalValue
-			);
-		});
-		value = replacedValue;
-	}
-
-	if (options.mutate) {
-		const {
-			when,
-			value: newValue,
-			withTranslation,
-			endAdornment,
-		} = options.mutate;
-		if (when) {
-			value = `${withTranslation ? translate(newValue) : newValue}${
-				endAdornment ?? ""
-			} `;
+	const getKey = (key: string, localeData: {}): string => {
+		if (!key) {
+			return "";
 		}
-	}
 
-	return value;
+		if (!key.includes(".")) {
+			return localeData[key as keyof {}];
+		}
+		return key
+			?.split(".")
+			?.reduce((acc, cur) => acc?.[cur as keyof {}], localeData)
+			?.toString();
+	};
+
+	const formatLocaleValue = (
+		value: string,
+		options: LocaleOptions = {}
+	): string => {
+		if (options.capitalize) {
+			value = value.charAt(0).toUpperCase() + value.slice(1);
+		}
+
+		if (options.uppercase) {
+			value = value.toUpperCase();
+		}
+
+		if (options.lowercase) {
+			value = value.toLowerCase();
+		}
+
+		if (options.replace) {
+			let replacedValue = value;
+			Object.entries(options.replace.values).forEach(([key, value]) => {
+				const mustTranslate = options.replace?.withTranslation || false;
+				const finalValue = mustTranslate
+					? translate(value?.toString())
+					: value?.toString();
+				replacedValue = replacedValue?.replace(
+					new RegExp(`{${key}}`, "g"),
+					finalValue
+				);
+			});
+			value = replacedValue;
+		}
+
+		if (options.mutate) {
+			const {
+				when,
+				value: newValue,
+				withTranslation,
+				endAdornment,
+			} = options.mutate;
+			if (when) {
+				value = `${withTranslation ? translate(newValue) : newValue}${
+					endAdornment ?? ""
+				} `;
+			}
+		}
+
+		return value;
+	};
+
+	return { translate };
 };
 
 export { useLocale };

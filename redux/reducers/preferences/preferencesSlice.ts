@@ -3,7 +3,7 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { toggleDarkMode } from "@/utils/ui.util";
 
 export type AppTheme = "light" | "dark";
-export type AppLanguage = "en-US" | "es-DO";
+export type AppLanguage = "en-US" | "es-MX";
 export interface PreferencesState {
 	theme: AppTheme;
 	language: AppLanguage;
@@ -11,7 +11,7 @@ export interface PreferencesState {
 
 const initialState: PreferencesState = {
 	theme: "light",
-	language: "es-DO",
+	language: "es-MX",
 };
 
 export const preferencesSlice = createSlice({
