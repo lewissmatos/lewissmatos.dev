@@ -76,5 +76,15 @@
 	"projectCoverUrl": "Imagen de portada del proyecto",
 	"projectUrl": "URL del proyecto",
 	"projectRepoUrl": "URL del repositorio del proyecto",
-	"projectTechnologies": "Tecnologías del proyecto"
+	"projectTechnologies": "Tecnologías del proyecto",
+	"singleProjectPage": {
+		"projectNotFound": "Proyecto no encontrado",
+		"inDevelopment": "En desarrollo",
+		"developedBy": "Desarrollado por {developer}",
+		"fromTo": "{from} - {to}",
+		"checkItOut": "Visita {element}"
+	},
+	"screenshots": "Capturas de pantalla",
+	"githubRepository": "Repositorio de GitHub",
+	"officialWebsite": "Sitio web oficial"
 }

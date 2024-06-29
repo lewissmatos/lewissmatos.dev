@@ -27,6 +27,13 @@ const config: Config = {
 	},
 	plugins: [
 		nextui({
+			layout: {
+				radius: {
+					small: "4px",
+					medium: "6px",
+					large: "8px",
+				},
+			},
 			themes: {
 				dark: {
 					colors: {

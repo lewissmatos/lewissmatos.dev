@@ -115,7 +115,7 @@ const AddProjectForm: FC<AddProjectProps> = ({
 			placement="center"
 			backdrop="blur"
 		>
-			<ModalContent className="overflow-x-hidden ">
+			<ModalContent className="overflow-x-hidden">
 				<form onSubmit={handleSubmit(onSubmit)}>
 					<ModalHeader className="flex flex-col gap-1">
 						{isEditing
@@ -172,6 +172,7 @@ const AddProjectForm: FC<AddProjectProps> = ({
 								isIconOnly
 								size="sm"
 								variant="solid"
+								isDisabled={isSubmitting || watch("technologies")?.length >= 10}
 								onClick={() => {
 									const techs = (watch("technologies") as string[]) || [];
 									const newTech = prompt("Enter a new technology");

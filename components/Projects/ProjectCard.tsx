@@ -6,17 +6,21 @@ import {
 	CardFooter,
 	Image,
 	Button,
-	Link,
+	Link as UiLink,
 } from "@nextui-org/react";
 import { Project } from "@prisma/client";
 import { format } from "date-fns";
 import { useLocale } from "@/hooks/useLocale";
 import { useAuthStore } from "@/store/auth.store";
-
+import Link from "next/link";
 type ProjectCardProps = {
 	project: Project;
 	handleOpenDeleteProject: (project: Project) => void;
 	handleOpenUpdateProject: (project: Project) => void;
+};
+
+const formatNameToPathName = (name: string) => {
+	return name.replaceAll(" ", "-");
 };
 const ProjectCard = ({
 	project,
@@ -29,7 +33,7 @@ const ProjectCard = ({
 	return (
 		<Card
 			isFooterBlurred
-			className="w-full h-[350px] relative overflow-hidden shadow-lg group"
+			className="w-full max-h-[200px] sm:max-h-[300px] relative overflow-hidden shadow-lg group"
 		>
 			<CardHeader className="absolute z-10 top-1 flex-row items-start justify-end">
 				{canEdit && (
@@ -61,10 +65,12 @@ const ProjectCard = ({
 			/>
 			<CardFooter className="absolute bg-black/30 bottom-0 z-10 opacity-0 group-hover:opacity-100 transition-all duration-200 p-2 ">
 				<div className="flex flex-grow gap-2 items-center">
-					<div className="flex flex-col text-sm">
+					<div className="flex flex-col">
 						{/* <p className="text-white/60">{project.description}</p> */}
-						<p className="text-white/90 font-medium text-xl">{project.name}</p>
-						<p className="text-white/60">
+						<p className="text-white/90 font-medium text-md sm:text-xl">
+							{project.name}
+						</p>
+						<p className="text-white/60 text-sm sm:text-lg">
 							{format(project.startedAt, "LLLL, yyyy")}{" "}
 							{project.finishedAt
 								? ` - ${format(project.finishedAt, "LLLL, yyyy")}`
@@ -75,21 +81,23 @@ const ProjectCard = ({
 				<div className="flex gap-2">
 					{project.url && (
 						<Button isIconOnly size="sm" variant="flat">
-							<Link target="_blank" href={project.url}>
-								<span className="icon-[material-symbols--open-in-new] text-white text-xl"></span>
-							</Link>
+							<UiLink target="_blank" href={project.url}>
+								<span className="icon-[material-symbols--open-in-new] text-white text-md sm:text-xl"></span>
+							</UiLink>
 						</Button>
 					)}
 
 					{project.repoUrl && (
 						<Button isIconOnly size="sm" variant="flat">
-							<Link target="_blank" href={project.repoUrl}>
-								<span className="icon-[hugeicons--github-01] text-white text-xl "></span>
-							</Link>
+							<UiLink target="_blank" href={project.repoUrl}>
+								<span className="icon-[hugeicons--github-01] text-white text-md sm:text-xl"></span>
+							</UiLink>
 						</Button>
 					)}
-					<Button size="sm" variant="flat" className="text-white text-sm ">
-						{translate("projectCard.seeMore")}...
+					<Button size="sm" variant="flat" className="text-white text-sm">
+						<Link href={`/projects/${formatNameToPathName(project.name)}`}>
+							{translate("projectCard.seeMore")}...
+						</Link>
 					</Button>
 				</div>
 			</CardFooter>

@@ -31,11 +31,18 @@ const useProjectsService = () => {
 		return res;
 	};
 
+	const getByName = async (name: string) => {
+		setIsLoading(true);
+		const { data } = await axios.get(`/api/projects?name=${name}`);
+		setIsLoading(false);
+		return data?.data;
+	};
+
 	useEffect(() => {
 		get();
 	}, []);
 
-	return { projects, get, add, remove, update, isLoading };
+	return { projects, get, add, remove, update, isLoading, getByName };
 };
 
 export { useProjectsService };

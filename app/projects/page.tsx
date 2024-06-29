@@ -4,9 +4,9 @@ import React, { useEffect, useState } from "react";
 
 const page = () => {
 	return (
-		<div className="flex flex-col gap-6 pb-4">
+		<main className="flex flex-col gap-6 pb-4">
 			<ProjectsList />
-		</div>
+		</main>
 	);
 };
 

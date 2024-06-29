@@ -30,6 +30,7 @@ const useLocale = (currentLang?: AppLanguage) => {
 
 		const locale = getKey(key, localeData);
 
+		console.log(locale);
 		const value =
 			(options ? formatLocaleValue(locale, options) : locale) || key;
 		return value;
@@ -41,12 +42,14 @@ const useLocale = (currentLang?: AppLanguage) => {
 		}
 
 		if (!key.includes(".")) {
-			return localeData[key as keyof {}];
+			return localeData[key as keyof {}] || key;
 		}
-		return key
-			?.split(".")
-			?.reduce((acc, cur) => acc?.[cur as keyof {}], localeData)
-			?.toString();
+		return (
+			key
+				?.split(".")
+				?.reduce((acc, cur) => acc?.[cur as keyof {}], localeData)
+				?.toString() || key
+		);
 	};
 
 	const formatLocaleValue = (
@@ -54,6 +57,7 @@ const useLocale = (currentLang?: AppLanguage) => {
 		options: LocaleOptions = {}
 	): string => {
 		if (options.capitalize) {
+			console.log(value);
 			value = value.charAt(0).toUpperCase() + value.slice(1);
 		}
 

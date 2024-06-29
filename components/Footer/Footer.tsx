@@ -8,8 +8,8 @@ const Footer = () => {
 	const currentYear = format(new Date(), "yyyy");
 	const { translate } = useLocale();
 	return (
-		<div className=" py-10 flex justify-between">
-			<span>
+		<div className="py-10 flex justify-between">
+			<span className="text-sm sm:text-lg">
 				© {currentYear}
 				<Link
 					color="foreground"
@@ -17,7 +17,7 @@ const Footer = () => {
 					target="_blank"
 					rel="noreferrer"
 					isBlock
-					className="text font-bold"
+					className="font-bold "
 				>
 					<span className="l">lewissmatos. </span>
 				</Link>
@@ -31,7 +31,7 @@ const Footer = () => {
 				isBlock
 				className="text font-bold"
 			>
-				<span className="l">{translate("contact")}</span>
+				<span className="text-sm sm:text-lg ">{translate("contact")}</span>
 			</Link>
 		</div>
 	);

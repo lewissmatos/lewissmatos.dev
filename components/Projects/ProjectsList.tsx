@@ -88,7 +88,7 @@ const ProjectsList = () => {
 				)}
 			</div>
 			{isLoading && (
-				<div className="flex flex-col items-center justify-center h-[500] w-full ">
+				<div className="flex flex-col items-center justify-center h-[800] w-full ">
 					<h3 className="text-center text-2xl font-semibold">
 						{translate("loading")}...
 					</h3>

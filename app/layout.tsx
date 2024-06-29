@@ -6,6 +6,8 @@ import Footer from "@/components/Footer/Footer";
 import { Toaster } from "react-hot-toast";
 import { ThemeProvider } from "next-themes";
 import { NextUIProvider } from "@nextui-org/react";
+import { Suspense } from "react";
+import Loading from "./loading";
 const myFont = localFont({
 	src: "../public/fonts/PlayfairDisplay-VariableFont_wght.ttf",
 });
@@ -38,18 +40,20 @@ export default function RootLayout({
 	return (
 		<html lang="en">
 			<body className={`${myFont.className} flex flex-col min-h-screen`}>
-				<ThemeProvider attribute="class">
-					<Toaster position="bottom-center" />
-					<nav>
-						<AppNavbar />
-					</nav>
-					<main style={{ overflowY: "auto" }} className="mt-20 flex-grow">
-						<NextUIProvider>{children}</NextUIProvider>
-					</main>
-					<footer>
-						<Footer />
-					</footer>
-				</ThemeProvider>
+				<Suspense fallback={<Loading />}>
+					<ThemeProvider attribute="class">
+						<Toaster position="bottom-center" />
+						<nav>
+							<AppNavbar />
+						</nav>
+						<main style={{ overflowY: "auto" }} className="mt-20 flex-grow">
+							<NextUIProvider>{children}</NextUIProvider>
+						</main>
+						<footer>
+							<Footer />
+						</footer>
+					</ThemeProvider>
+				</Suspense>
 			</body>
 		</html>
 	);
