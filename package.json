@@ -65,5 +65,10 @@
 		"ts-jest": "^29.1.4",
 		"ts-node": "^10.9.2",
 		"typescript": "^5"
+	},
+	"overrides": {
+		"@testing-library/react-hooks": {
+			"@types/react": "^18.3.3"
+		}
 	}
 }
