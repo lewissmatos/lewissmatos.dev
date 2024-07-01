@@ -45,6 +45,7 @@ const authOptions: AuthOptions = {
 			return token;
 		},
 	},
+
 	session: {
 		strategy: "jwt",
 	},

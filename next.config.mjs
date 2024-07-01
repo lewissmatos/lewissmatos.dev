@@ -1,7 +1,6 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-	output: "export",
-	// basePath: "/lewissmatos.dev",
+	basePath: "/lewissmatos.dev",
 	async redirects() {
 		return [
 			// Basic redirect
