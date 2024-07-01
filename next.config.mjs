@@ -1,5 +1,7 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+	output: "export",
+	basePath: "/lewissmatos.dev",
 	async redirects() {
 		return [
 			// Basic redirect
@@ -8,12 +10,6 @@ const nextConfig = {
 				destination: "/home",
 				permanent: true,
 			},
-			// // Wildcard path matching
-			// {
-			// 	source: "/blog/:slug",
-			// 	destination: "/news/:slug",
-			// 	permanent: true,
-			// },
 		];
 	},
 };
