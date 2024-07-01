@@ -68,7 +68,8 @@
 	},
 	"overrides": {
 		"@testing-library/react-hooks": {
-			"@types/react": "^18.3.3"
+			"@types/react": "^18.3.3",
+			"react": "^18"
 		}
 	}
 }
