@@ -30,7 +30,6 @@ const useLocale = (currentLang?: AppLanguage) => {
 
 		const locale = getKey(key, localeData);
 
-		console.log(locale);
 		const value =
 			(options ? formatLocaleValue(locale, options) : locale) || key;
 		return value;
@@ -57,7 +56,6 @@ const useLocale = (currentLang?: AppLanguage) => {
 		options: LocaleOptions = {}
 	): string => {
 		if (options.capitalize) {
-			console.log(value);
 			value = value.charAt(0).toUpperCase() + value.slice(1);
 		}
 
